@@ -12,6 +12,8 @@ delta = {
     pg.K_RIGHT: (+5, 0)
 }
 
+
+
 bb_imgs=[]  #拡大爆弾のリスト
 accs=[a for a in range(1,11)]  #加速度のリスト
 
@@ -37,7 +39,6 @@ def main():
 
     kk_img = pg.transform.rotozoom(kk_img, 0, 2.0)
     go_img = pg.image.load("ex02/fig/4.png")
-    go_rct=go_img.get_rect()
     go_img = pg.transform.rotozoom(go_img, 0, 10.0)
     kk_rct = kk_img.get_rect()
     kk_rct.center = 900, 400
@@ -49,6 +50,18 @@ def main():
     bb_rct.centery = random.randint(0, HEIGHT)
     vx, vy = +5, +5  #練習2：爆弾の速度
  
+ 
+    mk = {(-5,0):pg.transform.rotozoom(kk_img, 0, 1.0),
+          (-5,-5):pg.transform.rotozoom(kk_img, -45, 1.0),
+          (0,-5):pg.transform.flip(pg.transform.rotozoom(kk_img,-90,1.0),True,False),
+          (+5,-5):pg.transform.flip(pg.transform.rotozoom(kk_img,-45,1.0),True,False),
+          (+5,0):pg.transform.flip(pg.transform.rotozoom(kk_img,0,1.0),True,False), 
+          (+5,+5):pg.transform.flip(pg.transform.rotozoom(kk_img,45,1.0),True,False),           
+          (0,+5):pg.transform.flip(pg.transform.rotozoom(kk_img,90,1.0),True,False),
+          (-5,+5):pg.transform.rotozoom(kk_img,45,1.0),
+}
+    
+    
     
     vx,vy=+5,+5
     clock = pg.time.Clock()
@@ -76,7 +89,9 @@ def main():
             if key_lst[k]:  #キーが押されたら
                 sum_mv[0] += tpl[0]
                 sum_mv[1] += tpl[1]                           
-
+        for l,m in mk.items():
+            if sum_mv[0] == l[0] and sum_mv[1] == l[1]:
+                kk_img = m
 
         screen.blit(bg_img, [0, 0])
         kk_rct.move_ip(sum_mv[0], sum_mv[1])
