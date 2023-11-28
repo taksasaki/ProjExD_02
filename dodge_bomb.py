@@ -38,7 +38,7 @@ def main():
     kk_img = pg.image.load("ex02/fig/3.png")
 
     kk_img = pg.transform.rotozoom(kk_img, 0, 2.0)
-    go_img = pg.image.load("ex02/fig/4.png")
+    go_img = pg.image.load("ex02/fig/8.png")
     go_img = pg.transform.rotozoom(go_img, 0, 10.0)
     kk_rct = kk_img.get_rect()
     kk_rct.center = 900, 400
@@ -58,7 +58,7 @@ def main():
           (+5,0):pg.transform.flip(pg.transform.rotozoom(kk_img,0,1.0),True,False), 
           (+5,+5):pg.transform.flip(pg.transform.rotozoom(kk_img,45,1.0),True,False),           
           (0,+5):pg.transform.flip(pg.transform.rotozoom(kk_img,90,1.0),True,False),
-          (-5,+5):pg.transform.rotozoom(kk_img,45,1.0),
+          (-5,+5):pg.transform.rotozoom(kk_img,45,1.0)
 }
     
     
