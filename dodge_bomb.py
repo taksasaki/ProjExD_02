@@ -12,6 +12,8 @@ delta = {
     pg.K_RIGHT: (+5, 0)
 }
 
+bb_imgs=[]  #拡大爆弾のリスト
+accs=[a for a in range(1,11)]  #加速度のリスト
 
 def check_bound(rct: pg.Rect) -> tuple[bool, bool]:
     """
@@ -32,7 +34,11 @@ def main():
     screen = pg.display.set_mode((WIDTH, HEIGHT))
     bg_img = pg.image.load("ex02/fig/pg_bg.jpg")
     kk_img = pg.image.load("ex02/fig/3.png")
+
     kk_img = pg.transform.rotozoom(kk_img, 0, 2.0)
+    go_img = pg.image.load("ex02/fig/4.png")
+    go_rct=go_img.get_rect()
+    go_img = pg.transform.rotozoom(go_img, 0, 10.0)
     kk_rct = kk_img.get_rect()
     kk_rct.center = 900, 400
     bb_img = pg.Surface((20, 20))  #練習1：透明のSurfaceを作る
@@ -42,7 +48,12 @@ def main():
     bb_rct.centerx = random.randint(0, WIDTH)
     bb_rct.centery = random.randint(0, HEIGHT)
     vx, vy = +5, +5  #練習2：爆弾の速度
-
+ 
+    
+    vx,vy=+5,+5
+    clock = pg.time.Clock()
+    tmr = 0
+    
     clock = pg.time.Clock()
     tmr = 0
     while True:
@@ -51,16 +62,20 @@ def main():
                 return
             
             if kk_rct.colliderect(bb_rct):
-                print("Game Over")
-                return
+                screen.blit(go_img, [630,60])
+                pg.display.update()
+                clock.tick(0.4)
+                return print("Game Over")
+        
+
+        
             
         key_lst = pg.key.get_pressed()
         sum_mv = [0, 0]
         for k, tpl in delta.items():
             if key_lst[k]:  #キーが押されたら
                 sum_mv[0] += tpl[0]
-                sum_mv[1] += tpl[1]
-        
+                sum_mv[1] += tpl[1]                           
 
 
         screen.blit(bg_img, [0, 0])
@@ -80,8 +95,12 @@ def main():
         clock.tick(50)
 
 
+
+
 if __name__ == "__main__":
     pg.init()
     main()
     pg.quit()
     sys.exit()
+    
+    
